@@ -1,0 +1,2 @@
+#minute	hour	mday	month	wday	command
+00	12	*	*	6	$HOME/bin/ticketreport.sh

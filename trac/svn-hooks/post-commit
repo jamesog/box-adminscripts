@@ -1,0 +1,25 @@
+#!/bin/sh
+
+REPOS="$1"
+REV="$2"
+LOG=`/usr/local/bin/svnlook log -r $REV $REPOS`
+AUTHOR=`/usr/local/bin/svnlook author -r $REV $REPOS`
+
+. /usr/local/trac/trac.env
+
+export PATH=/usr/local/bin:$PATH
+
+$TRAC_HOME/bin/commit-email.pl "$REPOS" "$REV" \
+	--from subversion@boxbackup.org \
+	-r boxbackup-dev@boxbackup.org \
+	-s COMMIT boxbackup-commit@boxbackup.org
+
+#/usr/local/bin/python /usr/local/bin/trac-post-commit-hook \
+#  -p "$TRAC_ENV" \
+#  -r "$REV"      \
+#  -u "$AUTHOR"   \
+#  -m "$LOG"      \
+#  -s "$TRAC_URL"
+
+$TRAC_HOME/bin/trac-svn-hook $REPOS $REV
+
