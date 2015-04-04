@@ -3,7 +3,7 @@
   # N.B. The /svn alias is a no-op. It exists only so that WSGI doesn't steal
   # POSTs to it. This is a side-effect of moving Trac from /trac to /
   Alias /svn           /usr/local/www/htdocs
-  Alias /releases      /usr/local/www/htdocs/releases 
+  Alias /releases      /usr/local/www/htdocs/releases
   Alias /snapshots     /usr/local/www/htdocs/snapshots
   Alias /chrome        /usr/local/www/trac/htdocs
   Alias /adminguide    /usr/local/www/htdocs/adminguide
@@ -15,6 +15,7 @@
   Alias /robots.txt    /usr/local/www/htdocs/robots.txt
   Alias /googlede93e0b02a8808de.html /usr/local/www/htdocs/googlede93e0b02a8808de.html
   Alias /nortonsw_10631d70-e410-0.html /usr/local/www/htdocs/nortonsw_10631d70-e410-0.html
+  Alias /BingSiteAuth.xml /usr/local/www/htdocs/BingSiteAuth.xml
 
   Redirect permanent /accounts.html    /wiki/CertificatesAndAccountsManagement
   Redirect permanent /bbackupctl.html  /wiki/ControllingAClient
@@ -38,18 +39,14 @@
   Redirect gone      /build
 
   <Directory "/usr/local/www/trac/htdocs">
-    Order allow,deny
-    Allow from all
+    Require all granted
   </Directory>
 
   # N.B. This must come after the aliases for static files
-  WSGIScriptAlias / /usr/local/www/trac/cgi-bin/trac.wsgi
+  ScriptAlias / /usr/local/www/trac/cgi-bin/trac.fcgi/
 
   <Directory /usr/local/www/trac/cgi-bin>
-    WSGIProcessGroup bb-trac
-    WSGIApplicationGroup %{GLOBAL}
-    Order deny,allow
-    Allow from all
+    Require all granted
   </Directory>
 
   <LocationMatch "^/(chrome|adminguide|man-html|images|favicon.ico|bbdoc.css)">
