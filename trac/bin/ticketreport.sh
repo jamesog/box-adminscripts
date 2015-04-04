@@ -35,7 +35,7 @@ experimental development code and obsolete releases.
 
 __MSG
 
-psql -h localhost -d trac-boxbackup -U trac -f $SQLFILE -o $OUTFILE > /dev/null
+psql -h localhost -d trac_boxbackup -U trac -f $SQLFILE -o $OUTFILE > /dev/null
 
 sed -e 's/(\([[:digit:]]*\) rows)/\1 tickets total./g' -i "" $OUTFILE
 
